@@ -7,6 +7,8 @@ CPP = g++
 OBJS = options.o loader.o LoopScoring.o RNAScoring.o TreeScoring.o StructureReader.o PFtest.o
 LINKOBJ  = options.o loader.o LoopScoring.o StructureReader.o TreeScoring.o PFtest.o
 SRC = RNAscoring.cc StructureReader.c TreeScoring.c LoopScoring.c loader.cc options.c PFtest.cc
+EXECUTABLE = RNAScoring
+BINDIR = /usr/local/bin
 
 LIBS =
 
@@ -23,8 +25,8 @@ LIBS =
 #RNAscoring: $(OBJS)
 #	$(CPP)  -o $@ $^ $(LIBRARY_PATH) $(LIBS)
 
-RNAScoring: $(LINKOBJ) RNAScoring.cc
-	$(CPP) RNAScoring.cc $(LINKOBJ) -o RNAScoring
+$(EXECUTABLE): $(LINKOBJ) RNAScoring.cc
+	$(CPP) RNAScoring.cc $(LINKOBJ) -o $(EXECUTABLE)
 
 options.o: options.c
 	$(CC) -c options.c -o options.o $(CFLAGS)
@@ -47,6 +49,11 @@ PFtest.o: PFtest.cc
 clean:
 	rm -f $(OBJS)
 
+install:
+	cp $(EXECUTABLE) $(BINDIR)
+
+uninstall:
+	rm $(BINDIR)/$(EXECUTABLE)
 
 
 #depends:
